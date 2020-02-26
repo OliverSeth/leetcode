@@ -1,4 +1,10 @@
 /*
+ * @Author: Oliver Seth 
+ * @Date: 2020-02-26 14:54:05 
+ * @Last Modified by: Oliver Seth
+ * @Last Modified time: 2020-02-26 14:55:11
+ */
+/*
  * @lc app=leetcode.cn id=117 lang=java
  *
  * [117] 填充每个节点的下一个右侧节点指针 II
@@ -29,7 +35,30 @@ class Node {
 */
 class Solution {
     public Node connect(Node root) {
-        
+        if (root == null) {
+            return root;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(null);
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            if (node != null) {
+                node.next = queue.element();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            } else {
+                if (queue.isEmpty()) {
+                    break;
+                }
+                queue.offer(null);
+            }
+        }
+        return root;
     }
 }
 // @lc code=end
